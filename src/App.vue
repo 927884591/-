@@ -1,12 +1,21 @@
 <template>
   <div>
-    <input v-model="show" type="text" name="" id="" />
-    <input v-model="result" type="text" />
+    <div id="title">
+      <h1>亲戚计算器</h1>
+    </div>
+    <div class="main">
+      <div>
+        <input v-model="show" type="text" name="" id="" class="show" />
+      </div>
+      <div>
+        <input v-model="result" type="text" class="result" />
+      </div>
+    </div>
     <table>
       <tr>
         <td @click="h">夫</td>
         <td @click="w">妻</td>
-        <td>删除</td>
+        <td @click="del">删除</td>
         <td @click="clear">清空</td>
       </tr>
       <tr>
@@ -33,7 +42,7 @@ export default {
   data() {
     return {
       result: "",
-      show: "",
+      show: "我",
       default: "的",
       option: {
         text: "",
@@ -43,9 +52,14 @@ export default {
   },
   methods: {
     clear() {
-      this.option.text = "";
+      this.option.text = "我";
       this.show = this.option.text;
       this.result = "我";
+    },
+    del() {
+      let length = this.option.text.length;
+      this.show = this.option.text = this.option.text.slice(0, length - 3);
+      this.result = relationship(this.option);
     },
     getRelation(rel) {
       if (this.option.text) {
@@ -54,41 +68,15 @@ export default {
         this.option.text = "我" + this.default + rel;
       }
       this.show = this.option.text;
-      // "我" + this.default + relationship(this.option)[0]
       this.result = relationship(this.option);
     },
     h() {
-      // if (this.option.text) {
-      //   this.option.text += this.default + "丈夫";
-      // } else {
-      //   this.option.text = "我" + this.default + "丈夫";
-      // }
-      // this.show = this.option.text;
-      // // "我" + this.default + relationship(this.option)[0]
-      // this.result = relationship(this.option);
-      // console.log(this.result);
       this.getRelation("丈夫");
     }, //丈夫
     w() {
-      // if (this.option.text) {
-      //   this.option.text += this.default + "妻子";
-      // } else {
-      //   this.option.text = "我" + this.default + "妻子";
-      // }
-      // this.show = this.option.text;
-      // // "我" + this.default + relationship(this.option)[0]
-      // this.result = relationship(this.option);
       this.getRelation("妻子");
     },
     f() {
-      // if (this.option.text) {
-      //   this.option.text += this.default + "妻子";
-      // } else {
-      //   this.option.text = "我" + this.default + "妻子";
-      // }
-      // this.show = this.option.text;
-      // // "我" + this.default + relationship(this.option)[0]
-      // this.result = relationship(this.option);
       this.getRelation("父亲");
     },
     m() {
@@ -123,6 +111,44 @@ export default {
 * {
   margin: 0;
   padding: 0;
+}
+#title {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.main {
+  position: relative;
+  top: 380px;
+}
+div .show,
+div .result {
+  width: 100%;
+  height: 24px;
+  border: none;
+  text-align: right;
+  font-size: 24px;
+  font-weight: 700;
+}
+div .result {
+  margin-top: 24px;
+}
+table {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+tr {
+  display: flex;
+  width: 100%;
+}
+td {
+  font-size: 24px;
+  height: 100px;
+  line-height: 100px;
+  flex: 1;
+  background-color: #fff;
+  border: solid 1px #ddd;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
